@@ -23,7 +23,7 @@ Nextflow installation completed.
 
 Transform all the BAM files found recursively in a given directory to ADAM format.
 
-Run workflow locally (requires ADAM to be installed locally)
+Run workflow locally (requires ADAM and dependencies to be installed locally)
 ```bash
 $ ./nextflow run transform.nf
 N E X T F L O W  ~  version 0.15.0
