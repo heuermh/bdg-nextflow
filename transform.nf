@@ -14,9 +14,7 @@ process transform {
     set sample, ref, file("${sample}.adam") into adams
 
   """
-  # replace mkdir with adam command here, e.g.
-  # adam-submit transform $bam
-  mkdir ${sample}.adam
+  adam-submit transform -force_load_bam $bam ${sample}.adam
   """
 }
 
