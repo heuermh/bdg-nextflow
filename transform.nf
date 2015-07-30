@@ -14,9 +14,7 @@ process transform {
     set sample, 'source', file("${sample}.adam") into adams
 
   """
-  # replace mkdir with adam command here, e.g.
-  # adam-submit transform $bam
-  mkdir ${sample}.adam
+  adam-submit transform -force_load_bam $bam ${sample}.adam
 
   # workaround for copying .adam files back to input directory, which isn't
   # the nextflow way of doing things (and may not work if wrapped in docker)
