@@ -39,9 +39,9 @@ $ ./nextflow run transform.nf --dir /my/directory/full/of/bam/files
 ...
 ```
 
-Run workflow locally using Docker image (requires only Docker to be installed locally)
+Run workflow locally using Docker image such as [heuermh/adam](https://registry.hub.docker.com/u/heuermh/adam/) (requires only Docker to be installed locally)
 ```bash
-./nextflow run transform.nf -with-docker DOCKER_IMAGE_TBD
+./nextflow run transform.nf -with-docker heuermh/adam
 N E X T F L O W  ~  version 0.15.0
 Launching transform.nf
 [warm up] executor > local
