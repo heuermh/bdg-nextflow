@@ -30,7 +30,7 @@ process transformToReads {
   publishDir outputDir, mode: publishMode
 
   input:
-    set sample, bam from bams
+    set sample, file(bam) from bams
   output:
     set sample, file("${sample}.reads.adam") into convertedReads
 
@@ -48,7 +48,7 @@ process sortReads {
   publishDir outputDir, mode: publishMode
 
   input:
-    set sample, reads from toSort
+    set sample, file(reads) from toSort
   output:
     set sample, file("${sample}.reads.sorted.adam") into sortedReads
 
@@ -66,7 +66,7 @@ process convertReadsToPileup {
   publishDir outputDir, mode: publishMode
 
   input:
-    set sample, reads from toPileup
+    set sample, file(reads) from toPileup
   output:
     set sample, file("${sample}.pileup") into pileups
 
@@ -81,7 +81,7 @@ process printReads {
   publishDir outputDir, mode: publishMode
 
   input:
-    set sample, reads from toPrint
+    set sample, file(reads) from toPrint
   output:
     set sample, file("${sample}.out") into prints
 
@@ -95,7 +95,7 @@ process flagstat {
   publishDir outputDir, mode: publishMode
 
   input:
-    set sample, reads from toFlagstat
+    set sample, file(reads) from toFlagstat
   output:
     set sample, file("${sample}.flagstat") into flagstats
 
