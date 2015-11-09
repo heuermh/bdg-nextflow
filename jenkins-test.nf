@@ -83,10 +83,10 @@ process printReads {
   input:
     set sample, file(reads) from toPrint
   output:
-    set sample, file("${sample}.out") into prints
+    set sample, file("${sample}.json") into prints
 
   """
-  adam-submit print $reads > ${sample}.out
+  adam-submit print $reads -pretty -o ${sample}.json
   """
 }
 
