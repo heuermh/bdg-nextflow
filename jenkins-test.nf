@@ -9,7 +9,7 @@ outputDir = "${params.outputDir}"
 publishMode = "${params.publishMode}"
 
 // extend here to run across several samples
-samples = Channel.just(params.sample)
+samples = Channel.value(params.sample)
 
 process downloadSample {
   tag { sample }
@@ -41,7 +41,6 @@ process transformToReads {
 
 // tee converted reads channel, since we need to read from it several times
 (toSort, toConvert, toPrint, toFlagstat) = convertedReads.into(4)
-//(toSort, toConvert, toPileup, toPrint, toFlagstat) = convertedReads.into(5)
 
 process sortReads {
   tag { sample }
@@ -56,25 +55,6 @@ process sortReads {
   adam-submit transform -sort_reads $reads ${sample}.reads.sorted.adam
   """
 }
-
-/*
-
-  ? reads2ref is not a valid ADAM command
-
-process convertReadsToPileup {
-  tag { sample }
-  publishDir outputDir, mode: publishMode
-
-  input:
-    set sample, file(reads) from toPileup
-  output:
-    set sample, file("${sample}.pileup") into pileups
-
-  """
-  adam-submit reads2ref $reads ${sample}.pileup
-  """
-}
-*/
 
 process printReads {
   tag { sample }
