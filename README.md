@@ -1,11 +1,11 @@
 # bdg-nextflow
 Workflows implemented via Nextflow.
 
-###Hacking bdg-nextflow
+### Hacking bdg-nextflow
 
 Install
 
- * JDK 1.7 or later, http://openjdk.java.net
+ * JDK 1.8 or later, http://openjdk.java.net
  * Nextflow version 0.16.1 or later, http://nextflow.io
 
 ```bash
@@ -19,7 +19,7 @@ $ curl -fsSL get.nextflow.io | bash
 Nextflow installation completed.
 ```
 
-#### transform.nf
+### transform.nf
 
 Transform all the BAM files found recursively in a given directory to ADAM format.
 
