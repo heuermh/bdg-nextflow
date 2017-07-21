@@ -15,6 +15,6 @@ process transform {
     set sample, parent, file("${sample}.adam") into reads
 
   """
-  adam-submit transform -force_load_bam $bam ${sample}.adam
+  adam-submit ${params.sparkOpts} -- transform -force_load_bam $bam ${sample}.adam
   """
 }

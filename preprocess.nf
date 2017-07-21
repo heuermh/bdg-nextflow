@@ -19,7 +19,7 @@ process convertBamToAdam {
     set sample, parent, file("${sample}.adam") into alignedReads
 
   """
-  adam-submit transform $bam ${sample}.adam
+  adam-submit ${params.sparkOpts} -- transform $bam ${sample}.adam
   """
 }
 
@@ -31,7 +31,7 @@ process convertSnpsToAdam {
     file("snps.adam") into adamSnps
 
   """
-  adam-submit vcf2adam -only_variants $snps snps.adam
+  adam-submit ${params.sparkOpts} -- vcf2adam -only_variants $snps snps.adam
   """
 }
 
@@ -45,7 +45,7 @@ process markDuplicateReads {
     set sample, parent, file("${sample}.adam.mkdup") into mkdups
 
   """
-  adam-submit transform $reads ${sample}.adam.mkdup" -aligned_read_predicate -limit_projection -mark_duplicate_reads
+  adam-submit ${params.sparkOpts} -- transform $reads ${sample}.adam.mkdup" -aligned_read_predicate -limit_projection -mark_duplicate_reads
   """
 }
 
@@ -59,7 +59,7 @@ process realignIndels {
     set sample, parent, file("${sample}.adam.ri") into ris
 
   """
-  adam-submit transform $mkdup ${sample}.adam.ri -realign_indels
+  adam-submit ${params.sparkOpts} -- transform $mkdup ${sample}.adam.ri -realign_indels
   """
 }
 
@@ -74,7 +74,7 @@ process recalibrateBaseQualityScores {
     set sample, parent, file("${sample}.adam.bqsr") into bqsrs
 
   """
-  adam-submit transform $ri ${sample}.adam.bqsr -recalibrate_base_qualities -known_snps $snps
+  adam-submit ${params.sparkOpts} -- transform $ri ${sample}.adam.bqsr -recalibrate_base_qualities -known_snps $snps
   """
 }
 
@@ -89,6 +89,6 @@ process convertToBam {
     set sample, parent, file("${sample}.bqsr.bam") into bqsrBams
 
   """
-  adam-submit transform $bqsr ${sample}.bqsr.bam -sort_reads -single
+  adam-submit ${params.sparkOpts} -- transform $bqsr ${sample}.bqsr.bam -sort_reads -single
   """
 }
