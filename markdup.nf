@@ -7,7 +7,7 @@ bams = Channel.fromPath(bamFiles).map { path -> tuple(path.baseName, path) }
 
 process markdup {
   tag { sample }
-  container "quay.io/biocontainers/adam:0.23.0--0"
+  container "quay.io/biocontainers/adam:0.32.0--0"
 
   input:
     set sample, file(bam) from bams
@@ -26,6 +26,6 @@ process markdup {
   """
 }
 
-markdups.subscribe{
-  println "Transformed ${it.get(0)} alignments into ${it.get(1)} with ADAM mark duplicates."
+markdups.subscribe {
+  println "Marked duplicates for sample ${it.get(0)} into ${it.get(1)}."
 }

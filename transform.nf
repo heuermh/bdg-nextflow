@@ -3,18 +3,27 @@
 params.dir = "${baseDir}/example"
 
 bamFiles = "${params.dir}/**.bam"
-bams = Channel.fromPath(bamFiles).map { path -> tuple(path.baseName, path.toRealPath().getParent(), path) }
+bams = Channel.fromPath(bamFiles).map { path -> tuple(path.baseName, path) }
 
 process transform {
   tag { sample }
-  publishDir "$parent", mode: 'copy'
+  container "quay.io/biocontainers/adam:0.32.0--0"
 
   input:
-    set sample, parent, file(bam) from bams
+    set sample, file(bam) from bams
   output:
-    set sample, parent, file("${sample}.adam") into reads
+    set sample, file("${sample}.adam") into alignments
 
   """
-  adam-submit ${params.sparkOpts} -- transform -force_load_bam $bam ${sample}.adam
+  adam-submit \
+    ${params.sparkOpts} \
+    -- \
+    transformAlignments \
+    $bam \
+    ${sample}.adam
   """
+}
+
+alignments.subscribe {
+  println "Transformed sample ${it.get(0)} into alignments ${it.get(1)}."
 }
