@@ -7,7 +7,7 @@ bams = Channel.fromPath(bamFiles).map { path -> tuple(path.baseName, path) }
 
 process markdup {
   tag { sample }
-  container "quay.io/biocontainers/adam:0.32.0--0"
+  container "quay.io/biocontainers/adam:0.34.0--0"
 
   input:
     set sample, file(bam) from bams
